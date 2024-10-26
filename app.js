@@ -1,8 +1,8 @@
 let boxes = document.querySelectorAll('.box');
-let resetBtn = document.querySelector('#btn-reset');
+let resetBtn = document.querySelector('.reset-btn');
 let msgContainer = document.querySelector('.msg-container');
-let newGame = document.querySelector('#new-btn');
-let msg = document.querySelector('#msg');
+let msg = document.querySelector('.msg');
+let NewGame = document.querySelector('.btn-new');
 
 let turnO = true;
 let count = 0;
@@ -18,65 +18,66 @@ const winPatterns = [
 ];
 const resetGame = () => {
   turnO = true;
-  count=0;
+  count =0;
   enableBoxes();
   msgContainer.classList.add('hide');
 };
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
-    console.log('you clicked a button');
+    console.log('clicked');
 
     if (turnO) {
-      box.innerText = 'O';
+      box.textContent = 'O';
       turnO = false;
     } else {
-      box.innerText = 'X';
+      box.textContent = 'X';
       turnO = true;
     }
     box.disabled = true;
     checkwinner();
     count++;
-    if(count===9){
+    if (count === 9) {
       gameDraw();
+    }
   });
 });
-const gameDraw=()=>{
-  msg.textcontent=`Game was a Draw`;
-  msg-container.classList.remove('hide);
+
+const gameDraw = () => {
+  msg.textContent = `Game is a draw`;
+  msgContainer.classList.remove('hide');
   disabledBoxes();
-}
+};
 const disabledBoxes = () => {
   for (let box of boxes) {
     box.disabled = true;
   }
 };
+
 const enableBoxes = () => {
   for (let box of boxes) {
     box.disabled = false;
-    box.innerText = '';
+    box.innerHTML = '';
   }
 };
+
 const ShowWinner = (winner) => {
-  msg.innerText = `Congratulations, Winner is ${winner}`;
+  msg.textContent = `Congratulations winner is ${winner}`;
   msgContainer.classList.remove('hide');
   disabledBoxes();
 };
-
 const checkwinner = () => {
-  for (let pattern of winPatterns) {
-    // console.log(pattern[0], pattern[1], pattern[2]);
-
+  for (let Pattern of winPatterns) {
     // console.log(
-    //   boxes[pattern[0]].innerText,
-    //   boxes[pattern[1]].innerText,
-    //   boxes[pattern[2]].innerText
+    //   boxes[Pattern[0]].innerHTML,
+    //   boxes[Pattern[1]].innerHTML,
+    //   boxes[Pattern[2]].innerHTML
     // );
-    let pos1val = boxes[pattern[0]].innerText;
-    let pos2val = boxes[pattern[1]].innerText;
-    let pos3val = boxes[pattern[2]].innerText;
+    let pos1val = boxes[Pattern[0]].innerHTML;
+    let pos2val = boxes[Pattern[1]].innerHTML;
+    let pos3val = boxes[Pattern[2]].innerHTML;
     if (pos1val != '' && pos2val != '' && pos3val != '') {
-      if (pos1val === pos2val && pos2val === pos3val) {
-    
+      if (pos1val === pos2val && pos1val === pos2val && pos2val === pos3val) {
+        console.log('winner', pos1val);
         ShowWinner(pos1val);
         return true;
       }
@@ -84,5 +85,5 @@ const checkwinner = () => {
   }
 };
 
-newGame.addEventListener('click', resetGame);
 resetBtn.addEventListener('click', resetGame);
+NewGame.addEventListener('click', resetGame);
